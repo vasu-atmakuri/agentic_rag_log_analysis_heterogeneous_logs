@@ -1,0 +1,13 @@
+model,method,paired_questions,accuracy_v1,accuracy_v2,only_v1_correct,only_v2_correct
+Llama 3.2 3B,multi_type_chunk_rag,168,0.244,0.2262,4,1
+Llama 3.2 3B,tool_using_agent,168,0.369,0.369,11,11
+Qwen3 4B,multi_type_chunk_rag,168,0.1905,0.2143,10,14
+Qwen3 4B,tool_using_agent,168,0.619,0.5417,20,7
+Llama 3.1 8B,multi_type_chunk_rag,168,0.1905,0.1905,0,0
+Llama 3.1 8B,tool_using_agent,168,0.3869,0.3869,0,0
+Mistral Small 24B,multi_type_chunk_rag,168,0.1905,0.2024,1,3
+Mistral Small 24B,tool_using_agent,168,0.4702,0.5179,2,10
+Qwen3 30B-A3B,multi_type_chunk_rag,168,0.256,0.256,3,3
+Qwen3 30B-A3B,tool_using_agent,168,0.625,0.6071,5,2
+Qwen3 4B (generic vs automatic v2),multi_type_chunk_rag,168,0.1905,0.2143,10,14
+Qwen3 4B (generic vs automatic v2),tool_using_agent,168,0.619,0.5417,20,7

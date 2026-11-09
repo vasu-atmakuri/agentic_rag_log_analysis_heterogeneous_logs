@@ -1,0 +1,7 @@
+model,method,questions,share_identical_across_wordings,accuracy_original,accuracy_paraphrase_1,accuracy_paraphrase_2
+qwen3:30b-a3b-instruct-2507-q4_K_M,multi_type_chunk_rag,626,0.8674,0.2236,0.1773,0.1837
+qwen3:30b-a3b-instruct-2507-q4_K_M,robust_tool_using_agent,626,0.7604,0.5783,0.5831,0.5735
+qwen3:30b-a3b-instruct-2507-q4_K_M,tool_using_agent,626,0.7332,0.5671,0.5671,0.5639
+qwen3:4b-instruct-2507-q4_K_M,multi_type_chunk_rag,626,0.8387,0.1789,0.1022,0.1374
+qwen3:4b-instruct-2507-q4_K_M,robust_tool_using_agent,626,0.7604,0.4121,0.3882,0.3914
+qwen3:4b-instruct-2507-q4_K_M,tool_using_agent,626,0.7572,0.4105,0.3914,0.3898

@@ -1,0 +1,30 @@
+# Environment and caches
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+*.pkl
+
+# Large or reproducible inputs (download or regenerate with the scripts in benchmark_construction/)
+log_datasets/
+experiment_artifacts/
+engineer_written_questions/log_files_for_question_writers/
+engineer_written_questions/log_files_for_question_writers.zip
+engineer_written_questions/_to_delete/
+
+# Run records are archived on Zenodo (see README); the repository keeps the analysis outputs
+experiment_results*/raw_runs/
+experiment_results*/archived_*/
+experiment_results*/dev_smoke_tests/
+experiment_results*/human_validation/
+
+# Machine-specific logs and diagnostics
+*.log
+*_diagnostics_*.txt
+diagnostic_output_model_behaviour.txt
+smoke_test_summary.txt
+new_mac_smoke_test_summary.txt
+audit_prior_only_baselines_extended.txt
+
+# Manuscripts are distributed separately
+paper_*/

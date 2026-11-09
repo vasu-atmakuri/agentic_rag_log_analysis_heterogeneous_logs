@@ -1,0 +1,25 @@
+# External validation on RCAEval RE3: root-cause localization from logs (one question per fault case).
+# Same models, methods and runtime settings as the main comparison of the extended study.
+datasets_config: configs/benchmark_datasets_rcaeval_re3.yaml
+benchmark_dir: benchmark_questions_frozen_rcaeval_re3
+artifacts_dir: experiment_artifacts
+results_dir: experiment_results_rcaeval_re3
+expert_prompts_dir: configs/expert_system_prompts
+
+runtime:
+  num_ctx: 8192
+  temperature: 0.0
+  seed: 42
+  keep_alive: 2m
+  max_output_tokens: 768
+  max_output_tokens_thinking: 2048
+
+all_methods: &all_methods [bm25_line_retrieval, long_context_uniform, fixed_size_chunk_rag, multi_type_chunk_rag,
+                           tool_using_agent, robust_tool_using_agent, code_writing_agent]
+
+experiments:
+  - {name: rcaeval_root_cause__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: *all_methods, characterization: generic}
+  - {name: rcaeval_root_cause__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: *all_methods, characterization: generic}
+  - {name: rcaeval_root_cause__llama3_1_8b, model: "llama3.1:8b", datasets: all, methods: *all_methods, characterization: generic}
+  - {name: rcaeval_root_cause__llama3_2_3b, model: "llama3.2:3b", datasets: all, methods: *all_methods, characterization: generic}
+  - {name: rcaeval_root_cause__mistral_small_3_2_24b, model: "mistral-small3.2:24b", datasets: all, methods: *all_methods, characterization: generic}

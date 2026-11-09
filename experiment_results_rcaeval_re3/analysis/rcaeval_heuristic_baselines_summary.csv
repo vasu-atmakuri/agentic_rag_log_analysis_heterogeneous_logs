@@ -1,0 +1,5 @@
+baseline,ac1_ob,ac1_ss,ac1_tt,ac3_ob,ac3_ss,ac3_tt,ac1_all,ac3_all
+error_count_increase,0.107,0.179,0.0,0.643,0.643,0.107,0.095,0.464
+log_volume_change,0.679,0.036,0.0,0.75,0.25,0.0,0.238,0.333
+service_restart_signal,0.214,0.679,1.0,1.0,0.679,1.0,0.631,0.893
+uniform_random,0.1,0.087,0.022,0.3,0.262,0.065,0.07,0.209

@@ -1,0 +1,141 @@
+# Extended benchmark (journal study). Paths are relative to the project root.
+# Loghub-2.0 sources: the raw log is the system input; gold answers come from independent header readers plus
+# the authors' structured CSV (event templates). OpenSSH and HPC are truncated to their first 250,000 lines.
+seed: 20261104
+benchmark_output_dir: benchmark_questions_frozen_journal_extended
+
+default_questions_per_category: &qpc {factual: 18, temporal: 20, comparative: 16, causal: 14}
+
+datasets:
+  fault_injected_inference_service:
+    reader: fault_injected_testbed
+    log_path: log_datasets/fault_injected_inference_service/fault_injected_inference_service.log
+    ground_truth_manifest: log_datasets/fault_injected_inference_service/fault_injected_inference_service_ground_truth.json
+    time_style: iso
+    level_classes: [ERROR, WARN, CRITICAL]
+    window_hours: [1, 2, 3]
+    questions_per_category: {factual: 18, temporal: 18, comparative: 16, causal: 18}
+    dev_questions: 8
+
+  loghub2_apache:
+    reader: loghub2
+    loghub2_name: Apache
+    log_path: log_datasets/loghub2/Apache/Apache_full.log
+    structured_csv: log_datasets/loghub2/Apache/Apache_full.log_structured.csv
+    time_style: iso
+    level_classes: [ERROR]
+    template_classes: 6
+    no_component_questions: true
+    window_hours: [12, 24, 48]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_hadoop:
+    reader: loghub2
+    loghub2_name: Hadoop
+    log_path: log_datasets/loghub2/Hadoop/Hadoop_full.log
+    structured_csv: log_datasets/loghub2/Hadoop/Hadoop_full.log_structured.csv
+    time_style: iso
+    level_classes: [WARN, ERROR]
+    template_classes: 5
+    window_hours: [1, 3, 6]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_healthapp:
+    reader: loghub2
+    loghub2_name: HealthApp
+    log_path: log_datasets/loghub2/HealthApp/HealthApp_full.log
+    structured_csv: log_datasets/loghub2/HealthApp/HealthApp_full.log_structured.csv
+    time_style: iso
+    template_classes: 6
+    window_hours: [1, 2, 4]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_hpc:
+    reader: loghub2
+    loghub2_name: HPC
+    log_path: log_datasets/loghub2/HPC/HPC_first250k.log
+    structured_csv: log_datasets/loghub2/HPC/HPC_full.log_structured.csv
+    max_lines: 250000
+    time_style: iso
+    template_classes: 6
+    window_hours: [24, 72, 168]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_linux:
+    reader: loghub2
+    loghub2_name: Linux
+    log_path: log_datasets/loghub2/Linux/Linux_full.log
+    structured_csv: log_datasets/loghub2/Linux/Linux_full.log_structured.csv
+    base_year: 2005
+    time_style: syslog
+    keyword_classes: ["authentication failure", "session opened", "connection from"]
+    template_classes: 3
+    window_hours: [6, 12, 24]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_mac:
+    reader: loghub2
+    loghub2_name: Mac
+    log_path: log_datasets/loghub2/Mac/Mac_full.log
+    structured_csv: log_datasets/loghub2/Mac/Mac_full.log_structured.csv
+    base_year: 2017
+    time_style: syslog
+    template_classes: 6
+    window_hours: [1, 3, 6]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_openssh:
+    reader: loghub2
+    loghub2_name: OpenSSH
+    log_path: log_datasets/loghub2/OpenSSH/OpenSSH_first250k.log
+    structured_csv: log_datasets/loghub2/OpenSSH/OpenSSH_full.log_structured.csv
+    max_lines: 250000
+    base_year: 2015
+    time_style: syslog
+    template_classes: 6
+    no_component_questions: true
+    window_hours: [1, 3, 6]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_openstack:
+    reader: loghub2
+    loghub2_name: OpenStack
+    log_path: log_datasets/loghub2/OpenStack/OpenStack_full.log
+    structured_csv: log_datasets/loghub2/OpenStack/OpenStack_full.log_structured.csv
+    time_style: iso
+    level_classes: [WARN, ERROR]
+    template_classes: 5
+    window_hours: [1, 3, 6]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_proxifier:
+    reader: loghub2
+    loghub2_name: Proxifier
+    log_path: log_datasets/loghub2/Proxifier/Proxifier_full.log
+    structured_csv: log_datasets/loghub2/Proxifier/Proxifier_full.log_structured.csv
+    base_year: 2016
+    time_style: syslog
+    template_classes: 4
+    window_hours: [1, 3, 6]
+    questions_per_category: *qpc
+    dev_questions: 8
+
+  loghub2_zookeeper:
+    reader: loghub2
+    loghub2_name: Zookeeper
+    log_path: log_datasets/loghub2/Zookeeper/Zookeeper_full.log
+    structured_csv: log_datasets/loghub2/Zookeeper/Zookeeper_full.log_structured.csv
+    time_style: iso
+    level_classes: [ERROR, WARN]
+    template_classes: 4
+    window_hours: [1, 2, 3]
+    questions_per_category: *qpc
+    dev_questions: 8

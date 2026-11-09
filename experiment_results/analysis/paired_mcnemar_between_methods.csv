@@ -1,0 +1,11 @@
+experiment,method_a,method_b,n_paired,acc_a,acc_b,only_a_correct,only_b_correct,p_value_exact,p_value_holm
+main_comparison__qwen3_4b_instruct,bm25_line_retrieval,long_context_uniform,168,0.22023809523809523,0.11904761904761904,32,15,0.018623836615006432,0.09674881026148799
+main_comparison__qwen3_4b_instruct,bm25_line_retrieval,fixed_size_chunk_rag,168,0.22023809523809523,0.20238095238095238,24,21,0.765991824244793,1.0
+main_comparison__qwen3_4b_instruct,bm25_line_retrieval,multi_type_chunk_rag,168,0.22023809523809523,0.17857142857142858,24,17,0.34888887944907765,1.0
+main_comparison__qwen3_4b_instruct,bm25_line_retrieval,tool_using_agent,168,0.22023809523809523,0.6369047619047619,11,81,2.501505063220086e-14,1.7510535442540602e-13
+main_comparison__qwen3_4b_instruct,long_context_uniform,fixed_size_chunk_rag,168,0.11904761904761904,0.20238095238095238,8,22,0.016124801710247997,0.09674881026148799
+main_comparison__qwen3_4b_instruct,long_context_uniform,multi_type_chunk_rag,168,0.11904761904761904,0.17857142857142858,11,21,0.11018416518345475,0.440736660733819
+main_comparison__qwen3_4b_instruct,long_context_uniform,tool_using_agent,168,0.11904761904761904,0.6369047619047619,8,95,5.109797372820077e-20,5.109797372820077e-19
+main_comparison__qwen3_4b_instruct,fixed_size_chunk_rag,multi_type_chunk_rag,168,0.20238095238095238,0.17857142857142858,21,17,0.6271025701571489,1.0
+main_comparison__qwen3_4b_instruct,fixed_size_chunk_rag,tool_using_agent,168,0.20238095238095238,0.6369047619047619,11,84,4.51844580634533e-15,3.614756645076264e-14
+main_comparison__qwen3_4b_instruct,multi_type_chunk_rag,tool_using_agent,168,0.17857142857142858,0.6369047619047619,7,84,7.11654571984409e-18,6.404891147859681e-17

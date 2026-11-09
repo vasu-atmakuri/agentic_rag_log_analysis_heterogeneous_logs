@@ -1,0 +1,129 @@
+{
+  "created_utc": "2026-10-31T23:51:58+00:00",
+  "seed": 20261101,
+  "datasets": {
+    "fault_injected_inference_service": {
+      "log_sha256": "8f2e53bb5ae77a641a2827e6415391773ce2683d731cc8a41ce5df461954ce76",
+      "test_questions_sha256": "de8bbfce207d4874b3469dde7c673a602c5606b8498e20baefbbafc80e579dbc",
+      "reference_events": 55398,
+      "test_questions": 70,
+      "dev_questions": 6,
+      "test_by_category": {
+        "factual": 18,
+        "temporal": 18,
+        "comparative": 16,
+        "causal": 18
+      },
+      "test_by_template": {
+        "configured_batch_size_at_start": 3,
+        "first_component_of_class": 2,
+        "first_component_of_class_after_time": 2,
+        "first_time_of_class_for_component": 2,
+        "infrastructure_identifiers": 2,
+        "model_load_duration": 1,
+        "model_version_at_start": 2,
+        "model_version_during_incident": 2,
+        "scheduler_workers_at_start": 2,
+        "count_class_in_window": 7,
+        "count_component_events_in_window": 6,
+        "peak_hour_of_class_on_day": 5,
+        "top_component_for_class": 3,
+        "which_of_two_components_more_class": 13,
+        "incident_resolution": 6,
+        "incident_root_cause": 6,
+        "incident_root_component": 6
+      },
+      "candidate_pool_sizes": {
+        "causal/incident_resolution": 6,
+        "causal/incident_root_cause": 6,
+        "causal/incident_root_component": 6,
+        "comparative/top_component_for_class": 3,
+        "comparative/which_of_two_components_more_class": 23,
+        "factual/configured_batch_size_at_start": 3,
+        "factual/first_component_of_class": 3,
+        "factual/first_component_of_class_after_time": 30,
+        "factual/first_time_of_class_for_component": 15,
+        "factual/infrastructure_identifiers": 3,
+        "factual/model_load_duration": 1,
+        "factual/model_version_at_start": 3,
+        "factual/model_version_during_incident": 6,
+        "factual/scheduler_workers_at_start": 3,
+        "temporal/count_class_in_window": 37,
+        "temporal/count_component_events_in_window": 6,
+        "temporal/peak_hour_of_class_on_day": 5
+      }
+    },
+    "zookeeper": {
+      "log_sha256": "5c793ff30e960e387845fa81e595977a9037bc4801ef67f6c3298622d5d4572a",
+      "test_questions_sha256": "8aa0e0dcc6d20fa86bcf8784523e52ece0ff95e9569d06a3ddac45d510b04928",
+      "reference_events": 74380,
+      "test_questions": 48,
+      "dev_questions": 6,
+      "test_by_category": {
+        "factual": 12,
+        "temporal": 14,
+        "comparative": 12,
+        "causal": 10
+      },
+      "test_by_template": {
+        "first_component_of_class": 1,
+        "first_component_of_class_after_time": 6,
+        "first_time_of_class_for_component": 5,
+        "count_component_events_in_window": 4,
+        "peak_hour_of_class_on_day": 10,
+        "top_component_for_class": 1,
+        "top_component_in_window": 6,
+        "which_of_two_components_more_class": 5,
+        "component_immediately_preceding_first_class_event": 10
+      },
+      "candidate_pool_sizes": {
+        "causal/component_immediately_preceding_first_class_event": 10,
+        "comparative/top_component_for_class": 1,
+        "comparative/top_component_in_window": 10,
+        "comparative/which_of_two_components_more_class": 6,
+        "factual/first_component_of_class": 1,
+        "factual/first_component_of_class_after_time": 22,
+        "factual/first_time_of_class_for_component": 11,
+        "temporal/count_component_events_in_window": 4,
+        "temporal/peak_hour_of_class_on_day": 13
+      }
+    },
+    "linux_syslog": {
+      "log_sha256": "b541078328bf5402c254e7e8971a95963c464858031889ff6e15b6d1a857d490",
+      "test_questions_sha256": "7966031228ad7b7bbe1c5d7bb571dc9d76b7d892482f7f5225aab298062cb157",
+      "reference_events": 25542,
+      "test_questions": 50,
+      "dev_questions": 6,
+      "test_by_category": {
+        "factual": 12,
+        "temporal": 14,
+        "comparative": 12,
+        "causal": 12
+      },
+      "test_by_template": {
+        "first_component_of_class": 4,
+        "first_component_of_class_after_time": 4,
+        "first_time_of_class_for_component": 4,
+        "count_class_in_window": 5,
+        "count_component_events_in_window": 5,
+        "peak_hour_of_class_on_day": 4,
+        "top_component_for_class": 4,
+        "top_component_in_window": 4,
+        "which_of_two_components_more_class": 4,
+        "component_immediately_preceding_first_class_event": 12
+      },
+      "candidate_pool_sizes": {
+        "causal/component_immediately_preceding_first_class_event": 12,
+        "comparative/top_component_for_class": 5,
+        "comparative/top_component_in_window": 41,
+        "comparative/which_of_two_components_more_class": 9,
+        "factual/first_component_of_class": 4,
+        "factual/first_component_of_class_after_time": 23,
+        "factual/first_time_of_class_for_component": 17,
+        "temporal/count_class_in_window": 51,
+        "temporal/count_component_events_in_window": 30,
+        "temporal/peak_hour_of_class_on_day": 524
+      }
+    }
+  }
+}

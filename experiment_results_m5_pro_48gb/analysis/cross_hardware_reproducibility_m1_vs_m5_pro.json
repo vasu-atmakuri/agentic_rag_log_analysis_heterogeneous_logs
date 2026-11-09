@@ -1,0 +1,7 @@
+{
+  "paired_runs": 840,
+  "identical_correctness": 825,
+  "agreement": 0.9821,
+  "m1_accuracy": 0.2714,
+  "m5_pro_accuracy": 0.2655
+}

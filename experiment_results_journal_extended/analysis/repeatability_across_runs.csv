@@ -1,0 +1,7 @@
+model,method,runs,questions,accuracy_per_run,accuracy_sd,share_identical_across_runs
+llama3.2:3b,multi_type_chunk_rag,3,626,0.161;0.161;0.161,0.0,1.0
+llama3.2:3b,robust_tool_using_agent,3,626,0.211;0.211;0.211,0.0,1.0
+llama3.2:3b,tool_using_agent,3,626,0.196;0.196;0.196,0.0,1.0
+qwen3:4b-instruct-2507-q4_K_M,multi_type_chunk_rag,3,626,0.179;0.181;0.181,0.0009,0.9984
+qwen3:4b-instruct-2507-q4_K_M,robust_tool_using_agent,3,626,0.412;0.409;0.411,0.0016,0.992
+qwen3:4b-instruct-2507-q4_K_M,tool_using_agent,3,626,0.411;0.411;0.409,0.0009,0.9872

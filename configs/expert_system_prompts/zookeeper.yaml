@@ -1,0 +1,13 @@
+# Hand-written expert configuration for the 'zookeeper' log source.
+# Write this yourself, as an engineer who has read the log, BEFORE freezing the benchmark.
+# Do not look at benchmark questions or answers while writing it. Remove every TODO.
+log_type: "TODO short label"
+system_description: "TODO one paragraph on what the system is and its components"
+key_entities: []          # e.g. hosts, versions, endpoints
+key_event_types: []       # e.g. "connection refused", "leader election"
+important_loggers: []     # exact component names as they appear in the log
+noisy_loggers: []         # exact component names that are routine noise
+rag_system_prompt: |
+  TODO system prompt for answering from retrieved excerpts of this log
+agent_system_prompt: |
+  TODO system prompt for a tool-using analyst investigating this log

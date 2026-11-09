@@ -1,0 +1,54 @@
+# Extended (journal) experiment matrix. Runs in the listed order on the M5 Pro (48 GB). Resumable.
+# All main experiments use generic prompts (the better condition in the conference study); automatic
+# characterization is an ablation. Only the factor named in each experiment differs from its main run.
+datasets_config: configs/benchmark_datasets_journal_extended.yaml
+benchmark_dir: benchmark_questions_frozen_journal_extended
+artifacts_dir: experiment_artifacts
+results_dir: experiment_results_journal_extended
+expert_prompts_dir: configs/expert_system_prompts
+
+runtime:
+  num_ctx: 8192
+  temperature: 0.0
+  seed: 42
+  keep_alive: 2m
+  max_output_tokens: 768
+  max_output_tokens_thinking: 2048
+
+all_methods: &all_methods [bm25_line_retrieval, long_context_uniform, fixed_size_chunk_rag, multi_type_chunk_rag,
+                           tool_using_agent, robust_tool_using_agent, code_writing_agent]
+core_methods: &core_methods [multi_type_chunk_rag, tool_using_agent, robust_tool_using_agent]
+
+experiments:
+  # 1. Main comparison, five models
+  - {name: main_comparison__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: *all_methods, characterization: generic}
+  - {name: main_comparison__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: *all_methods, characterization: generic}
+  - {name: main_comparison__llama3_1_8b, model: "llama3.1:8b", datasets: all, methods: *all_methods, characterization: generic}
+  - {name: main_comparison__llama3_2_3b, model: "llama3.2:3b", datasets: all, methods: *all_methods, characterization: generic}
+
+  # 2. Tool ablations (Qwen3 4B, original agent)
+  - {name: tool_ablation_without_get_timeline__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [tool_using_agent], characterization: generic, disabled_tools: [get_timeline]}
+  - {name: tool_ablation_without_get_stats__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [tool_using_agent], characterization: generic, disabled_tools: [get_stats]}
+  - {name: tool_ablation_without_get_samples__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [tool_using_agent], characterization: generic, disabled_tools: [get_samples]}
+  - {name: tool_ablation_without_search_logs__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [tool_using_agent], characterization: generic, disabled_tools: [search_logs]}
+  - {name: tool_ablation_search_only__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [tool_using_agent], characterization: generic, disabled_tools: [get_timeline, get_stats, get_samples]}
+
+  # 3. Automatic characterization as an ablation (Qwen3 4B)
+  - {name: characterization_ablation_automatic__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: *core_methods, characterization: automatic}
+
+  # 4. Repeatability: two further runs of the core methods
+  - {name: repeat_runs__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: *core_methods, characterization: generic, repeats: 2}
+  - {name: repeat_runs__llama3_2_3b, model: "llama3.2:3b", datasets: all, methods: *core_methods, characterization: generic, repeats: 2}
+
+  # 5. Paraphrased questions
+  - {name: paraphrase_1__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: *core_methods, characterization: generic, question_variant: paraphrase_1}
+  - {name: paraphrase_2__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: *core_methods, characterization: generic, question_variant: paraphrase_2}
+  - {name: paraphrase_1__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: *core_methods, characterization: generic, question_variant: paraphrase_1}
+  - {name: paraphrase_2__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: *core_methods, characterization: generic, question_variant: paraphrase_2}
+
+  # 6. Slowest model last among main comparisons
+  - {name: main_comparison__mistral_small_3_2_24b, model: "mistral-small3.2:24b", datasets: all, methods: *all_methods, characterization: generic}
+
+  # 7. Long context at 32K tokens
+  - {name: long_context_32k__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [long_context_uniform], characterization: generic, runtime_overrides: {num_ctx: 32768}}
+  - {name: long_context_32k__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: [long_context_uniform], characterization: generic, runtime_overrides: {num_ctx: 32768}}

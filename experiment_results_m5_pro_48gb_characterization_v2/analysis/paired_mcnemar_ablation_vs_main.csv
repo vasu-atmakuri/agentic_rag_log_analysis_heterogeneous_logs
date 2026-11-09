@@ -1,0 +1,11 @@
+ablation,method,model,n_paired,acc_ablation,acc_main,only_ablation_correct,only_main_correct,p_value_exact,p_value_holm
+characterization_ablation_generic_prompts__qwen3_4b_instruct,multi_type_chunk_rag,qwen3:4b-instruct-2507-q4_K_M,168,0.19047619047619047,0.21428571428571427,10,14,0.5412561893463135,1.0
+characterization_ablation_generic_prompts__qwen3_4b_instruct,tool_using_agent,qwen3:4b-instruct-2507-q4_K_M,168,0.6190476190476191,0.5416666666666666,20,7,0.0191572904586792,0.191572904586792
+chunk_ablation_without_error_burst__qwen3_4b_instruct,multi_type_chunk_rag,qwen3:4b-instruct-2507-q4_K_M,70,0.18571428571428572,0.24285714285714285,1,5,0.21875,1.0
+chunk_ablation_without_error_burst__qwen3_4b_instruct,tool_using_agent,qwen3:4b-instruct-2507-q4_K_M,70,0.5714285714285714,0.5714285714285714,1,1,1.0,1.0
+chunk_ablation_without_init_sequence__qwen3_4b_instruct,multi_type_chunk_rag,qwen3:4b-instruct-2507-q4_K_M,70,0.22857142857142856,0.24285714285714285,0,1,1.0,1.0
+chunk_ablation_without_init_sequence__qwen3_4b_instruct,tool_using_agent,qwen3:4b-instruct-2507-q4_K_M,70,0.5571428571428572,0.5714285714285714,0,1,1.0,1.0
+chunk_ablation_without_logger_thread__qwen3_4b_instruct,multi_type_chunk_rag,qwen3:4b-instruct-2507-q4_K_M,70,0.18571428571428572,0.24285714285714285,2,6,0.2890625,1.0
+chunk_ablation_without_logger_thread__qwen3_4b_instruct,tool_using_agent,qwen3:4b-instruct-2507-q4_K_M,70,0.5714285714285714,0.5714285714285714,0,0,1.0,1.0
+chunk_ablation_without_time_window__qwen3_4b_instruct,multi_type_chunk_rag,qwen3:4b-instruct-2507-q4_K_M,70,0.2,0.24285714285714285,5,8,0.5810546875,1.0
+chunk_ablation_without_time_window__qwen3_4b_instruct,tool_using_agent,qwen3:4b-instruct-2507-q4_K_M,70,0.5571428571428572,0.5714285714285714,0,1,1.0,1.0

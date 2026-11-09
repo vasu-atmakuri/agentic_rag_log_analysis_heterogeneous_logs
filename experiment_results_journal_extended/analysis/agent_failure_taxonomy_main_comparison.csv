@@ -1,0 +1,6 @@
+model,agent_runs,incorrect,no_tool_call,iteration_limit,empty_tool_result,evidence_not_reached,evidence_misread,other_wrong_answer
+llama3_1_8b,626,454,0,54,248,19,2,131
+llama3_2_3b,626,503,5,88,307,27,3,73
+mistral_small_3_2_24b,626,408,11,0,8,181,4,204
+qwen3_30b_a3b_instruct,626,271,13,2,98,97,1,60
+qwen3_4b_instruct,626,369,37,0,132,89,9,102
