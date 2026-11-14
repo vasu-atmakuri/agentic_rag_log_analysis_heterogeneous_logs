@@ -1,6 +1,6 @@
 # Extended study design (journal version), fixed before any extended test run
 
-Builds on `study_design_preregistration.md` (the conference study, kept unchanged with its deviations 1 to 5).
+Builds on an earlier conference-scale pilot design (deviations 1 to 5 there), which is superseded by this design and not part of the repository.
 Everything runs locally (Apple M5 Pro, 48 GB) with open-weight models; no API or cloud service is used.
 
 ## 1. Research questions
@@ -149,3 +149,29 @@ Models: Llama 3.2 3B, Qwen3-4B-Instruct-2507, Llama 3.1 8B, Mistral Small 3.2 24
    test that drops 20% of lines changes 11 to 15 answers per source, which confirms that the check would have
    detected an effect. The version 1 readers are archived unchanged. The system's own log parser has the same
    blind spots for these lines (it treats them as continuation lines), which is part of what is evaluated.
+6. 2026-11-12, engineer-written questions. Two volunteers with 8 and 10 years of industry experience each wrote one
+   question set (25 questions) and rated one answer sheet.
+   All 50 answers were re-derived from the logs by the authors and confirmed. Six pairs ask for the same fact
+   (flagged `same_fact_as`). The first submitted sheets are the data of record; a later revision of one writer's
+   and one rater's sheet, made after feedback on the first versions, changed only the wording of four questions
+   and one rating and is archived but not used. Two-way comparison questions are graded by the option named first
+   in the final answer (`choice_first_mention`), a rule fixed before the runs.
+7. 2026-11-13, first review round. Added on existing records: results by number of records, an offline routing
+   analysis (post hoc), per-model and leave-one-source-out GEE fits and question-clustered bootstrap intervals.
+   Added as new runs, with configurations archived before the runs (`study_preregistration_archive_revision_experiments`):
+   BM25 with 20 and 50 lines and a single-shot query baseline (five models, template and practitioner questions)
+   and the timeline ablation with Qwen3-30B-A3B (10,766 runs).
+8. 2026-11-13, second review round. (a) Questions are classified by the operation needed to establish the answer
+   (direct lookup, ordered lookup, event precedence, aggregation, comparison, causal diagnosis), replacing the
+   single-record versus multi-record split, which mixed the records an answer names with the records needed to
+   establish it (`operation_taxonomy_analysis.py`). (b) The exact-computation reference was rewritten as
+   `parser_reconciliation_and_exact_computation_ceiling.py` and executed over exactly the events the tools see.
+   An earlier ad hoc check had treated unrecognized lines as events with the preceding line's time and component
+   and reported 553 of 556; over the tools' actual view, all 596 rule-computable answers (556 Loghub and 40
+   fault-injected service questions) are reproduced. (c) Parser revision 2, which recognizes every line of all ten
+   Loghub sources, was added as a sensitivity analysis only (selected with LOG_PARSER_REVISION=2); the three
+   agents were rerun with it on HealthApp, Mac and HPC with five models. (d) Three independent single-shot query
+   samples per question (temperature 0.7, seeds 1 to 3) were run with Qwen3-30B-A3B and Qwen3 4B as a budget control
+   for the iterative code agent. Configurations and the parser module were archived before these runs
+   (`study_preregistration_archive_second_round_review`).
+

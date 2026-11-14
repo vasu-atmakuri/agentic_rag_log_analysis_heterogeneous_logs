@@ -99,7 +99,8 @@ def run_model_code(table_path: str, code: str) -> str:
     return output if len(output) <= MAX_OUTPUT_CHARS else output[:MAX_OUTPUT_CHARS] + "\n...[output truncated]"
 
 
-def answer_code_writing_agent(workspace, backend, question: str, thinking: bool = False, **_) -> dict:
+def answer_code_writing_agent(workspace, backend, question: str, thinking: bool = False,
+                              max_code_runs: int = MAX_ITERATIONS, **_) -> dict:
     started = time.perf_counter()
     table = events_table_path(workspace)
     s = workspace.stats
@@ -121,7 +122,7 @@ def answer_code_writing_agent(workspace, backend, question: str, thinking: bool 
                 elided += _elide_all_but_last_observation(msgs)
         raise ContextLengthExceeded("code agent conversation does not fit the context window")
 
-    for iteration in range(MAX_ITERATIONS):
+    for iteration in range(max_code_runs):
         elided += _fit_to_budget(messages, budget)
         response = call(messages, True)
         tally.add(response)
@@ -146,7 +147,7 @@ def answer_code_writing_agent(workspace, backend, question: str, thinking: bool 
         last_response = call(messages, False)
         tally.add(last_response)
         final_text = last_response.content
-        trace.append({"iteration": MAX_ITERATIONS, "type": "forced_final", "content": final_text[:2000]})
+        trace.append({"iteration": max_code_runs, "type": "forced_final", "content": final_text[:2000]})
     final_text, extracted = ensure_final_answer(backend, messages, last_response, tally, thinking)
     return {
         "method": "code_writing_agent", "response_text": final_text, "final_answer": extract_final_answer(final_text),

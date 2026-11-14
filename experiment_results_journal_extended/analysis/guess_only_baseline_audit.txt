@@ -1,0 +1,22 @@
+component_immediately_preceding_first_class_event    entity    n= 86 prior_only_acc=0.174
+configured_batch_size_at_start                       integer   n=  3 prior_only_acc=0.000
+count_class_in_window                                integer   n= 74 prior_only_acc=0.000
+count_component_events_in_window                     integer   n= 43 prior_only_acc=0.023
+first_component_of_class                             entity    n= 38 prior_only_acc=0.053
+first_component_of_class_after_time                  entity    n= 58 prior_only_acc=0.000
+first_time_of_class                                  timestamp n= 10 prior_only_acc=0.000
+first_time_of_class_for_component                    timestamp n= 54 prior_only_acc=0.000
+incident_resolution                                  keyword_any n=  6 prior_only_acc=0.000
+incident_root_cause                                  keyword_any n=  6 prior_only_acc=0.000
+incident_root_component                              entity    n=  6 prior_only_acc=0.167
+infrastructure_identifiers                           entity    n=  1 prior_only_acc=1.000
+infrastructure_identifiers                           integer   n=  1 prior_only_acc=0.000
+model_load_duration                                  numeric   n=  1 prior_only_acc=0.000
+model_version_at_start                               entity    n=  2 prior_only_acc=0.500
+model_version_during_incident                        entity    n=  2 prior_only_acc=0.500
+peak_hour_of_class_on_day                            hour      n= 92 prior_only_acc=0.000
+scheduler_workers_at_start                           integer   n=  2 prior_only_acc=0.000
+top_component_for_class                              entity    n= 45 prior_only_acc=0.022
+top_component_in_window                              entity    n= 45 prior_only_acc=0.556
+which_of_two_components_more_class                   choice    n= 51 prior_only_acc=0.706
+overall prior-only accuracy 0.1342 n 626

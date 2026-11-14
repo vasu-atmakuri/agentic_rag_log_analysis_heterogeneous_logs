@@ -9,6 +9,7 @@ inherit timestamp and logger from their parent event.
 """
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -121,6 +122,8 @@ def _openstack(m: re.Match) -> dict:
 
 def _healthapp(m: re.Match) -> dict:
     day, clock = m["ts"].split("-", 1)
+    if len(day) == 6:  # revision 2: the log also writes unpadded dates, e.g. 201811 = 2018-01-01
+        day = f"{day[:4]}{int(day[4]):02d}{int(day[5]):02d}"
     hour, minute, second, millis = (int(x) for x in clock.split(":"))
     return {"ts": f"{day}-{hour:02d}:{minute:02d}:{second:02d}:{millis:03d}", "logger": m["logger"], "level": "UNSPECIFIED", "message": m["msg"]}
 
@@ -229,6 +232,24 @@ FORMAT_PROFILES = [
         _bracketed,
     ),
 ]
+
+
+# Parser revision 2 (sensitivity analysis only; the main study uses revision 1). Revision 1 does not recognize
+# HealthApp lines with unpadded dates, Mac lines whose process name contains spaces or is followed by a bracketed
+# context, and HPC lines with a negative flag field; such lines become continuation lines of the preceding event.
+# Revision 2 recognizes them, following the corrected reference readers. Select with LOG_PARSER_REVISION=2.
+PARSER_REVISION = os.environ.get("LOG_PARSER_REVISION", "1")
+if PARSER_REVISION == "2":
+    _REVISED_PATTERNS = {
+        "pipe_delimited_component": re.compile(
+            r"^(?P<ts>\d{6,8}-\d{1,2}:\d{1,2}:\d{1,2}:\d{1,3})\|(?P<logger>[^|]+)\|(?P<pid>\d+)\|(?P<msg>.*)$"),
+        "cluster_node_epoch": re.compile(
+            r"^(?P<logid>\d+) (?P<source>\S+) (?P<fields>.+?) (?P<epoch>\d{10}) (?P<flag>-?\d+) (?P<msg>.*)$"),
+        "syslog_rfc3164": re.compile(
+            r"^(?P<ts>[A-Z][a-z]{2}\s+\d{1,2}\s\d{2}:\d{2}:\d{2})\s+(?P<host>\S+)\s+"
+            r"(?P<logger>[^:\[]+?(?:\([^)]*\))?(?: [\d.]+)?)(?:\[(?P<pid>\d+)\])?(?: \([^)]*\))?:\s*(?P<msg>.*)$"),
+    }
+    FORMAT_PROFILES = [FormatProfile(p.name, _REVISED_PATTERNS.get(p.name, p.pattern), p.extract) for p in FORMAT_PROFILES]
 
 
 @dataclass

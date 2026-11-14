@@ -153,6 +153,19 @@ def grade_final_answer(question: dict, final_answer: str) -> dict:
                 if m:
                     hour = int(m.group(1)) % 12 + (12 if m.group(2) == "pm" else 0)
         correct, detail = hour == gold_hour, f"parsed_hour={hour}"
+    elif kind == "choice_first_mention":
+        # two-way comparisons written by engineers: option_groups[0] holds the gold option and its wordings;
+        # the option mentioned first in the final answer is taken as the model's choice
+        normalized = normalize_entity_text(answer)
+        first = None
+        for group_index, group in enumerate(question["option_groups"]):
+            for wording in group:
+                target = normalize_entity_text(wording)
+                m = re.search(r"(?<![a-z0-9])" + re.escape(target) + r"(?![a-z0-9])", normalized) if target else None
+                if m and (first is None or m.start() < first[0]):
+                    first = (m.start(), group_index)
+        correct = first is not None and first[1] == 0
+        detail = f"first_option={None if first is None else first[1]}"
     elif kind == "keyword_any":
         lowered = answer.lower()
         hits = [k for k in question.get("keywords", [gold]) if k.lower() in lowered]

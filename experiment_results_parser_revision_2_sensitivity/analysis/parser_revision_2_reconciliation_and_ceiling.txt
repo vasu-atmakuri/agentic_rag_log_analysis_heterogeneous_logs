@@ -1,0 +1,13 @@
+parser revision 2
+source format lines primary_events timestamp_agree component_agree ceiling
+loghub2_apache bracketed_timestamp 51978 1.000 1.0000 nan 24/24
+loghub2_hadoop log4j_bracket 179993 1.000 1.0000 1.0000 61/61
+loghub2_healthapp pipe_delimited_component 212394 1.000 1.0000 1.0000 61/61
+loghub2_hpc cluster_node_epoch 250000 1.000 1.0000 1.0000 68/68
+loghub2_linux syslog_rfc3164 23921 1.000 1.0000 1.0000 66/66
+loghub2_mac syslog_rfc3164 100314 1.000 1.0000 1.0000 60/60
+loghub2_openssh syslog_rfc3164 250000 1.000 1.0000 1.0000 26/26
+loghub2_openstack openstack_service_log 207632 1.000 1.0000 1.0000 68/68
+loghub2_proxifier proxifier_bracketed 21320 1.000 1.0000 1.0000 57/57
+loghub2_zookeeper log4j_bracket 74273 1.000 1.0000 1.0000 65/65
+TOTAL ceiling 556/556 = 100.0%

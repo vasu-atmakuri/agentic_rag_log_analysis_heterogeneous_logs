@@ -1,0 +1,27 @@
+# Second-round review: sensitivity of the parser-based agents to incomplete parsing. Revision 1 of the parser (main
+# study) does not recognize 23.1% of HealthApp lines, 6.6% of Mac lines and 1.3% of HPC lines; revision 2 recognizes
+# all lines of every source. The three agents are rerun on the questions of these three sources with revision 2
+# (run with LOG_PARSER_REVISION=2 and a separate artifacts folder); everything else is as in the main comparison.
+datasets_config: configs/benchmark_datasets_journal_extended.yaml
+benchmark_dir: benchmark_questions_frozen_journal_extended
+artifacts_dir: experiment_artifacts_parser_revision_2
+results_dir: experiment_results_parser_revision_2_sensitivity
+expert_prompts_dir: configs/expert_system_prompts
+
+runtime:
+  num_ctx: 8192
+  temperature: 0.0
+  seed: 42
+  keep_alive: 2m
+  max_output_tokens: 768
+  max_output_tokens_thinking: 2048
+
+partially_parsed_sources: &partial [loghub2_healthapp, loghub2_mac, loghub2_hpc]
+agents: &agents [tool_using_agent, robust_tool_using_agent, code_writing_agent]
+
+experiments:
+  - {name: parser_revision_2__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: *partial, methods: *agents, characterization: generic}
+  - {name: parser_revision_2__mistral_small_3_2_24b, model: "mistral-small3.2:24b", datasets: *partial, methods: *agents, characterization: generic}
+  - {name: parser_revision_2__llama3_1_8b, model: "llama3.1:8b", datasets: *partial, methods: *agents, characterization: generic}
+  - {name: parser_revision_2__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: *partial, methods: *agents, characterization: generic}
+  - {name: parser_revision_2__llama3_2_3b, model: "llama3.2:3b", datasets: *partial, methods: *agents, characterization: generic}

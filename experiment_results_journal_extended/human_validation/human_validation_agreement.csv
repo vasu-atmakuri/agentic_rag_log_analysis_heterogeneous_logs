@@ -1,0 +1,41 @@
+subset,comparison,items,agreement,cohen_kappa
+all,rater A vs rater B,200,0.995,0.99
+all,rater A vs automatic,200,0.995,0.99
+all,rater B vs automatic,200,1.0,1.0
+all,rater consensus vs automatic,199,1.0,1.0
+answer_type=choice,rater A vs rater B,14,1.0,1.0
+answer_type=choice,rater A vs automatic,14,1.0,1.0
+answer_type=choice,rater B vs automatic,14,1.0,1.0
+answer_type=choice,rater consensus vs automatic,14,1.0,1.0
+answer_type=entity,rater A vs rater B,109,1.0,1.0
+answer_type=entity,rater A vs automatic,109,1.0,1.0
+answer_type=entity,rater B vs automatic,109,1.0,1.0
+answer_type=entity,rater consensus vs automatic,109,1.0,1.0
+answer_type=hour,rater A vs rater B,19,1.0,1.0
+answer_type=hour,rater A vs automatic,19,1.0,1.0
+answer_type=hour,rater B vs automatic,19,1.0,1.0
+answer_type=hour,rater consensus vs automatic,19,1.0,1.0
+answer_type=integer,rater A vs rater B,32,1.0,1.0
+answer_type=integer,rater A vs automatic,32,1.0,1.0
+answer_type=integer,rater B vs automatic,32,1.0,1.0
+answer_type=integer,rater consensus vs automatic,32,1.0,1.0
+answer_type=keyword_any,rater A vs rater B,5,1.0,1.0
+answer_type=keyword_any,rater A vs automatic,5,1.0,1.0
+answer_type=keyword_any,rater B vs automatic,5,1.0,1.0
+answer_type=keyword_any,rater consensus vs automatic,5,1.0,1.0
+answer_type=numeric,rater A vs rater B,1,1.0,
+answer_type=numeric,rater A vs automatic,1,1.0,
+answer_type=numeric,rater B vs automatic,1,1.0,
+answer_type=numeric,rater consensus vs automatic,1,1.0,
+answer_type=timestamp,rater A vs rater B,20,0.95,0.9
+answer_type=timestamp,rater A vs automatic,20,0.95,0.9
+answer_type=timestamp,rater B vs automatic,20,1.0,1.0
+answer_type=timestamp,rater consensus vs automatic,19,1.0,1.0
+source=extended_sources,rater A vs rater B,150,0.9933,0.9867
+source=extended_sources,rater A vs automatic,150,0.9933,0.9867
+source=extended_sources,rater B vs automatic,150,1.0,1.0
+source=extended_sources,rater consensus vs automatic,149,1.0,1.0
+source=rcaeval_re3,rater A vs rater B,50,1.0,1.0
+source=rcaeval_re3,rater A vs automatic,50,1.0,1.0
+source=rcaeval_re3,rater B vs automatic,50,1.0,1.0
+source=rcaeval_re3,rater consensus vs automatic,50,1.0,1.0

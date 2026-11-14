@@ -1,0 +1,35 @@
+{
+  "created_utc": "2026-11-13T03:33:51+00:00",
+  "source_sheets": {
+    "A": {
+      "path": "engineer_written_questions/completed/engineer_written_questions_writer_a.xlsx",
+      "sha256": "26602c2b863d91d356978325348b4ffca6b9139dff25db04cb4297360615dd49"
+    },
+    "B": {
+      "path": "engineer_written_questions/completed/engineer_written_questions_writer_b.xlsx",
+      "sha256": "49001e7bb38c21ec6714f98219c967e1c11494fa5ce95b47b537bc52e8c2c078"
+    }
+  },
+  "datasets": {
+    "loghub2_hadoop": {
+      "test_questions": 10,
+      "test_questions_sha256": "cc73ecb7dac4c4bf499c288a8119561d315ec7d49f287e535964aed17a75649a"
+    },
+    "loghub2_zookeeper": {
+      "test_questions": 10,
+      "test_questions_sha256": "ca235f816bfeead7043fb919ccd9ed4e946965a68f35f961c7e030a6e0003ac5"
+    },
+    "loghub2_linux": {
+      "test_questions": 10,
+      "test_questions_sha256": "be3ea2d69267fa9beb16ee6269e79b11635fe79d7c4f270768b32c952f07a869"
+    },
+    "loghub2_apache": {
+      "test_questions": 10,
+      "test_questions_sha256": "88851ffaf411f2f7a22da4bc312a198701194c5f9a8dcb0f74f729e9538c4d89"
+    },
+    "loghub2_openssh": {
+      "test_questions": 10,
+      "test_questions_sha256": "a4b3fa42860c45078536be6e0bb562db1ff3f252f911606b8a8dbfa06bae2ea2"
+    }
+  }
+}

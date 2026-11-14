@@ -1,0 +1,45 @@
+Accuracy (%) by operation class, mean over the five models (questions per class in brackets)
+method                           direct_lookup(12)   ordered_lookup(160)  event_precedence(86)      aggregation(209)       comparison(141)  causal_diagnosis(18)
+bm25_line_retrieval              83.3 [58.3,100.0]      41.9 [34.5,49.0]       4.2 [ 0.9, 8.1]      13.2 [ 9.3,17.3]      34.3 [27.8,41.3]      12.2 [ 0.0,27.8]
+bm25_line_retrieval_top50        91.7 [78.3,100.0]      45.4 [38.9,51.9]       4.9 [ 2.1, 8.4]      21.1 [16.9,25.6]      40.6 [34.6,47.0]      22.2 [ 8.9,38.9]
+fixed_size_chunk_rag              35.0 [10.0,66.7]      23.5 [17.8,29.1]       5.1 [ 2.8, 8.1]       7.7 [ 4.8,10.9]      33.9 [27.8,40.4]      16.7 [ 4.4,33.3]
+multi_type_chunk_rag              61.7 [36.7,86.7]      30.9 [24.2,37.6]       3.7 [ 1.2, 6.7]       5.6 [ 3.1, 8.3]      30.2 [24.0,36.6]      43.3 [24.4,61.1]
+long_context_uniform               0.0 [ 0.0, 0.0]      14.8 [10.5,19.4]       5.8 [ 3.5, 8.4]       4.2 [ 2.5, 6.2]      20.1 [15.6,25.0]       3.3 [ 0.0, 8.9]
+tool_using_agent                  28.3 [16.7,40.0]      40.4 [36.0,44.8]       6.0 [ 3.5, 8.8]      39.8 [35.1,44.2]      46.0 [41.3,50.5]      21.1 [11.1,31.1]
+robust_tool_using_agent           38.3 [23.3,53.3]      43.4 [38.9,48.0]       7.4 [ 4.4,10.9]      39.9 [35.2,44.5]      46.2 [41.6,50.8]      22.2 [12.2,32.2]
+code_writing_agent                18.3 [11.7,25.0]      28.6 [24.2,33.1]       8.8 [ 6.0,11.9]      24.1 [20.4,27.7]      40.0 [34.9,44.8]      11.1 [ 5.6,17.8]
+single_query_generation            8.3 [ 3.3,15.0]      26.9 [22.6,31.4]       4.9 [ 3.3, 7.0]      18.1 [15.2,21.0]      36.7 [31.9,41.4]       8.9 [ 4.4,14.4]
+
+Per model, accuracy (%) by operation class
+llama3_2_3b
+  bm25_line_retrieval          83.3  33.8   3.5   8.6  19.9   5.6
+  bm25_line_retrieval_top50    91.7  29.4   9.3  14.4  32.6   5.6
+  robust_tool_using_agent      25.0  21.9   0.0  28.7  24.1   0.0
+  code_writing_agent            8.3   6.2   0.0   8.6   7.1  11.1
+qwen3_4b_instruct
+  bm25_line_retrieval          83.3  40.6   4.7  14.8  36.9  16.7
+  bm25_line_retrieval_top50    91.7  45.6   1.2  22.5  34.0  22.2
+  robust_tool_using_agent      66.7  51.9   9.3  39.7  49.6  33.3
+  code_writing_agent            8.3  24.4   5.8  22.0  44.7  22.2
+llama3_1_8b
+  bm25_line_retrieval          83.3  38.8   4.7  14.8  34.8  11.1
+  bm25_line_retrieval_top50    91.7  41.2   4.7  23.0  40.4  16.7
+  robust_tool_using_agent      16.7  27.5   7.0  39.2  41.1   0.0
+  code_writing_agent            0.0  22.5   2.3   8.6  35.5   5.6
+mistral_small_3_2_24b
+  bm25_line_retrieval          83.3  48.8   2.3  13.4  39.0  11.1
+  bm25_line_retrieval_top50    91.7  55.0   2.3  22.0  48.9  27.8
+  robust_tool_using_agent      25.0  43.8   8.1  34.0  46.8  22.2
+  code_writing_agent            0.0  34.4   5.8  36.8  43.3  16.7
+qwen3_30b_a3b_instruct
+  bm25_line_retrieval          83.3  47.5   5.8  14.4  41.1  16.7
+  bm25_line_retrieval_top50    91.7  55.6   7.0  23.9  46.8  38.9
+  robust_tool_using_agent      58.3  71.9  12.8  57.9  69.5  55.6
+  code_writing_agent           75.0  55.6  30.2  44.5  69.5   0.0
+
+Accuracy (%) on the 556 Loghub-2.0 questions (same population as the exact-computation ceiling, 553/556 = 99.5%)
+llama3_2_3b bm25_line_retrieval=17.6 (n=556); bm25_line_retrieval_top50=21.4 (n=556); tool_using_agent=17.4 (n=556); robust_tool_using_agent=19.4 (n=556); code_writing_agent=5.9 (n=556)
+qwen3_4b_instruct bm25_line_retrieval=25.5 (n=556); bm25_line_retrieval_top50=29.7 (n=556); tool_using_agent=37.9 (n=556); robust_tool_using_agent=37.6 (n=556); code_writing_agent=21.8 (n=556)
+llama3_1_8b bm25_line_retrieval=24.6 (n=556); bm25_line_retrieval_top50=29.1 (n=556); tool_using_agent=26.3 (n=556); robust_tool_using_agent=29.3 (n=556); code_writing_agent=16.9 (n=556)
+mistral_small_3_2_24b bm25_line_retrieval=27.2 (n=556); bm25_line_retrieval_top50=34.5 (n=556); tool_using_agent=33.6 (n=556); robust_tool_using_agent=34.4 (n=556); code_writing_agent=29.3 (n=556)
+qwen3_30b_a3b_instruct bm25_line_retrieval=28.2 (n=556); bm25_line_retrieval_top50=35.3 (n=556); tool_using_agent=54.7 (n=556); robust_tool_using_agent=56.1 (n=556); code_writing_agent=47.8 (n=556)

@@ -6,7 +6,7 @@ clear margins, no events at window boundaries), then sampled round-robin across 
 fixed seed. A disjoint development split is drawn for debugging; the test split is frozen with
 SHA-256 hashes of the questions and of the source logs.
 
-Usage: python -m benchmark_construction.generate_benchmark_questions --config configs/benchmark_datasets.yaml
+Usage: python -m benchmark_construction.generate_benchmark_questions --config configs/benchmark_datasets_journal_extended.yaml
 """
 from __future__ import annotations
 

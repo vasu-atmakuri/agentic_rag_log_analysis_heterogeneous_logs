@@ -1,0 +1,25 @@
+# Second-round review: is the iterative code agent's advantage over a single query due to seeing its results, or
+# to a larger inference budget? Three independent single-shot queries are sampled per question (temperature 0.7,
+# seeds 1 to 3). Three queries exceed the iterative agent's mean of 1.4 to 1.9 code runs per question; the answers
+# are combined offline by majority vote, and the share of questions answered correctly by any sample is reported.
+datasets_config: configs/benchmark_datasets_journal_extended.yaml
+benchmark_dir: benchmark_questions_frozen_journal_extended
+artifacts_dir: experiment_artifacts
+results_dir: experiment_results_independent_query_samples
+expert_prompts_dir: configs/expert_system_prompts
+
+runtime:
+  num_ctx: 8192
+  temperature: 0.0
+  seed: 42
+  keep_alive: 2m
+  max_output_tokens: 768
+  max_output_tokens_thinking: 2048
+
+experiments:
+  - {name: single_query_sample_seed1__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: [single_query_generation], characterization: generic, runtime_overrides: {temperature: 0.7, seed: 1}}
+  - {name: single_query_sample_seed2__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: [single_query_generation], characterization: generic, runtime_overrides: {temperature: 0.7, seed: 2}}
+  - {name: single_query_sample_seed3__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: all, methods: [single_query_generation], characterization: generic, runtime_overrides: {temperature: 0.7, seed: 3}}
+  - {name: single_query_sample_seed1__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [single_query_generation], characterization: generic, runtime_overrides: {temperature: 0.7, seed: 1}}
+  - {name: single_query_sample_seed2__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [single_query_generation], characterization: generic, runtime_overrides: {temperature: 0.7, seed: 2}}
+  - {name: single_query_sample_seed3__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: all, methods: [single_query_generation], characterization: generic, runtime_overrides: {temperature: 0.7, seed: 3}}

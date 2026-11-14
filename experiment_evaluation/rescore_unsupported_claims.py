@@ -1,7 +1,7 @@
 """Recomputes the unsupported-claim fields of stored runs with the current checker version, without
 calling any model. The original file is kept next to it with the suffix '.checker_v<old>'.
 
-Usage: python -m experiment_evaluation.rescore_unsupported_claims --config configs/experiment_matrix.yaml
+Usage: python -m experiment_evaluation.rescore_unsupported_claims --config configs/experiment_matrix_journal_extended.yaml
 """
 import argparse
 import json

@@ -1,0 +1,26 @@
+# Engineer-written questions (50 questions on five Loghub-2.0 logs), all models and methods.
+# Same runtime settings, workspaces and generic prompts as the main comparison of the extended study.
+datasets_config: configs/benchmark_datasets_journal_extended.yaml
+benchmark_dir: benchmark_questions_frozen_engineer_written
+artifacts_dir: experiment_artifacts
+results_dir: experiment_results_engineer_written
+expert_prompts_dir: configs/expert_system_prompts
+
+runtime:
+  num_ctx: 8192
+  temperature: 0.0
+  seed: 42
+  keep_alive: 2m
+  max_output_tokens: 768
+  max_output_tokens_thinking: 2048
+
+all_methods: &all_methods [bm25_line_retrieval, long_context_uniform, fixed_size_chunk_rag, multi_type_chunk_rag,
+                           tool_using_agent, robust_tool_using_agent, code_writing_agent]
+engineer_sources: &engineer_sources [loghub2_hadoop, loghub2_zookeeper, loghub2_linux, loghub2_apache, loghub2_openssh]
+
+experiments:
+  - {name: engineer_written__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: *engineer_sources, methods: *all_methods, characterization: generic}
+  - {name: engineer_written__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: *engineer_sources, methods: *all_methods, characterization: generic}
+  - {name: engineer_written__llama3_1_8b, model: "llama3.1:8b", datasets: *engineer_sources, methods: *all_methods, characterization: generic}
+  - {name: engineer_written__llama3_2_3b, model: "llama3.2:3b", datasets: *engineer_sources, methods: *all_methods, characterization: generic}
+  - {name: engineer_written__mistral_small_3_2_24b, model: "mistral-small3.2:24b", datasets: *engineer_sources, methods: *all_methods, characterization: generic}

@@ -10,8 +10,7 @@ Failure categories for incorrect agent answers (first matching rule wins):
 
 Outputs go to <results_dir>/analysis/.
 
-Usage: python -m experiment_evaluation.failure_taxonomy_and_figures --config configs/experiment_matrix_m5_pro_48gb_characterization_v2.yaml \
-           --version1-results experiment_results_m5_pro_48gb
+Usage: python -m experiment_evaluation.failure_taxonomy_and_figures --config configs/experiment_matrix_journal_extended.yaml
 """
 from __future__ import annotations
 
@@ -183,26 +182,29 @@ def figure_cost_accuracy(runs, out_dir):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--config", required=True)
-    parser.add_argument("--version1-results", required=True)
+    parser.add_argument("--version1-results", default=None, help="optional: earlier results folder for the characterization comparison")
     args = parser.parse_args()
     cfg = yaml.safe_load(open(args.config))
     out_dir = os.path.join(cfg["results_dir"], "analysis")
     os.makedirs(out_dir, exist_ok=True)
     v2 = load_runs(cfg["results_dir"])
-    v1 = load_runs(args.version1_results)
     tax = failure_taxonomy(v2)
     tax.to_csv(os.path.join(out_dir, "agent_failure_taxonomy.csv"), index=False)
-    cv = characterization_versions(v1, v2)
-    cv.to_csv(os.path.join(out_dir, "characterization_version_comparison.csv"), index=False)
+    cv = None
+    if args.version1_results:
+        cv = characterization_versions(load_runs(args.version1_results), v2)
+        cv.to_csv(os.path.join(out_dir, "characterization_version_comparison.csv"), index=False)
     figure_accuracy_by_model(v2, out_dir)
     figure_accuracy_by_category(v2, out_dir)
     figure_cost_accuracy(v2, out_dir)
     with open(os.path.join(out_dir, "failure_taxonomy_and_characterization_summary.md"), "w", encoding="utf-8") as h:
         h.write("# Agent failure taxonomy\n\n" + tax.to_markdown(index=False) + "\n\n")
-        h.write("# Characterization v1 (silent fallback where it failed) versus v2\n\n" + cv.to_markdown(index=False) + "\n")
+        if cv is not None:
+            h.write("# Characterization v1 (silent fallback where it failed) versus v2\n\n" + cv.to_markdown(index=False) + "\n")
     print(tax.to_string(index=False))
-    print()
-    print(cv.to_string(index=False))
+    if cv is not None:
+        print()
+        print(cv.to_string(index=False))
     print(f"\nWritten to {out_dir}")
 
 

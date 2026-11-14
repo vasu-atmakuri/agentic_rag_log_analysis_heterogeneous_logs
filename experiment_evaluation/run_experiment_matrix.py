@@ -7,8 +7,8 @@ time. Methods are interleaved per question so partial results stay balanced acro
   --pace night  runs at full speed
 
 Usage:
-  python -m experiment_evaluation.run_experiment_matrix --config configs/experiment_matrix.yaml --pace night
-  python -m experiment_evaluation.run_experiment_matrix --config configs/experiment_matrix.yaml --only main_comparison__qwen3_4b --split dev --limit 3
+  python -m experiment_evaluation.run_experiment_matrix --config configs/experiment_matrix_journal_extended.yaml --pace night
+  python -m experiment_evaluation.run_experiment_matrix --config configs/experiment_matrix_journal_extended.yaml --only main_comparison__qwen3_4b --split dev --limit 3
 """
 from __future__ import annotations
 
@@ -250,7 +250,10 @@ def main():
                             trace = result.pop("trace", [])
                             evidence = result.pop("evidence_line_numbers", [])
                             result["response_text"] = result["response_text"][:4000]
+                            implementation = result.pop("method", method)
                             record.update(result)
+                            record["method"] = method  # the configured method name (e.g. a parameterized variant)
+                            record["implementation"] = implementation
                             record.update(grade)
                             record.update(claims)
                             record["key_evidence_recall"] = (None if method in METHODS_WITHOUT_EVIDENCE_TRACKING

@@ -1,37 +1,43 @@
-# Exact tools, not better retrieval: local language model agents for question answering over heterogeneous system logs
+# Retrieval or exact computation? Local language models for question answering over system logs
 
-Code, frozen benchmarks, study design and analysis outputs for an empirical study that compares retrieval,
-long-context and agent methods for answering questions about system logs, using open models that run locally.
-Every experiment in the study ran on one laptop (Apple M5 Pro, 48 GB) with Ollama, at no monetary cost.
+Code, frozen benchmarks, run records and analysis outputs for a controlled study that compares retrieval,
+long-context and tool-based methods for answering questions about system logs with open models that run locally.
+Every experiment ran sequentially on one laptop (Apple M5 Pro, 48 GB) with Ollama.
 
 ## What is in the study
 
 - **Benchmark:** 626 frozen test questions over eleven log sources (ten Loghub-2.0 systems and a fault-injected
-  inference service). Gold answers are computed by independent readers from the Loghub-2.0 authors' structured
+  inference service), in six operation classes (direct lookup, ordered lookup, event precedence, aggregation,
+  comparison, causal diagnosis). Gold answers are computed by independent readers from the Loghub-2.0 authors'
   annotations and from the fault-injection manifest, never by a language model.
-- **External benchmark:** 84 RCAEval RE3 root-cause cases (Online Boutique, Sock Shop, Train Ticket), one log per case.
-- **Methods:** BM25 line retrieval, uniform long context, fixed-size chunk RAG, multi-type chunk RAG, a tool-using
-  agent, a robust-tool agent and a code-writing agent.
+- **External checks:** 50 questions written by two practitioners about five Loghub logs, and 84 RCAEval RE3
+  root-cause cases (logs only).
+- **Methods:** BM25 line retrieval (5, 20 and 50 lines), uniform long context, fixed-size chunk RAG, multi-type chunk
+  RAG, a tool-using agent, a robust-tool agent, a code-writing agent and a single-shot query baseline.
 - **Models:** Llama 3.2 3B, Qwen3-4B-Instruct-2507, Llama 3.1 8B, Mistral Small 3.2 24B, Qwen3-30B-A3B-Instruct-2507
-  (Q4_K_M, Ollama 0.40.13, temperature 0, seed 42).
-- **Experiments:** main comparison, tool ablations, automatic characterization, repeated runs, two paraphrase sets,
-  32K context; 43,194 runs on the extended benchmark and 2,940 on RCAEval.
-- **Study design and deviations:** `study_design_extended_journal.md` (the earlier conference-scale design is in
-  `study_design_preregistration.md`). Every change made after the first test run is listed there with its date,
-  evidence and effect.
+  (Q4_K_M, Ollama 0.40.13, temperature 0, seed 42). Model digests are in each `run_environment.json`.
+- **Runs:** 53,210 on the template benchmark, 2,500 on the practitioner questions and 2,940 on RCAEval; see
+  `RUN_RECORDS_MANIFEST.md` and `run_records_manifest.csv` (per-file counts and SHA-256 hashes).
+- **Study design and deviations:** `study_design_extended_journal.md`. Every change made after the first test run,
+  and every experiment added during review, is listed there with its date and effect. Configurations of added
+  experiments were hashed and archived before they started (`study_preregistration_archive_*`).
 
 ## Layout
 
 | Folder | Contents |
 |---|---|
-| `log_analysis_system/` | Format detection and parsing, statistics, chunking, retrieval, answer methods, tool-using, robust-tool and code-writing agents |
-| `benchmark_construction/` | Dataset download, independent gold-answer readers, question generation, paraphrases, RCAEval case preparation, gold verification |
-| `experiment_evaluation/` | Experiment runner, automatic grading, statistics, GEE and stability analyses, RCAEval analysis and reference baselines, human-validation sheets |
+| `log_analysis_system/` | Format detection and parsing (revision 1; revision 2 with `LOG_PARSER_REVISION=2`), statistics, chunking, retrieval, answer methods, agents |
+| `benchmark_construction/` | Dataset download, independent gold-answer readers, question generation, paraphrases, RCAEval cases, gold verification, practitioner question freezing |
+| `experiment_evaluation/` | Runner, automatic grading, statistics, operation-class analysis, parser reconciliation and exact-computation ceiling, RCAEval analysis, human-validation agreement |
 | `configs/` | Benchmark definitions and experiment matrices |
-| `scripts/` | Model server control, run queues, progress check, record hygiene |
+| `scripts/` | Model server control, run queues, progress check, record hygiene, run manifest |
 | `benchmark_questions_frozen_*` | Frozen question files with SHA-256 manifests |
-| `study_preregistration_archive_*` | Hash-stamped copies of the design, configurations and questions taken before the test runs |
-| `experiment_results_*/analysis/` | All tables and figures reported in the paper |
+| `engineer_written_questions/completed/` | Practitioner question sheets as returned (first versions are the data of record) |
+| `experiment_results_*/raw_runs/` | Run records, one JSON line per run (question, method, model, output, tool trace, timing, grade) |
+| `experiment_results_*/analysis/` | Tables and analysis outputs reported in the papers |
+| `experiment_results_journal_extended/human_validation/` | Rating sheets, answer key and agreement analysis |
+| `figures_reported_in_papers/` | The figures as published (regenerated by the scripts in `experiment_evaluation/`) |
+| `RUN_RECORDS_MANIFEST.md`, `run_records_manifest.csv` | Run counts per records file and SHA-256 hashes |
 
 ## Reproducing
 
@@ -40,17 +46,25 @@ python -m venv .venv && source .venv/bin/activate && pip install -r requirements
 python -m benchmark_construction.download_loghub2_and_rcaeval
 python -m benchmark_construction.download_rcaeval_re3
 scripts/prepare_journal_extended_benchmark_and_smoke_test.sh
-scripts/prepare_rcaeval_re3_benchmark_and_smoke_test.sh
 scripts/full_study_queue_journal_extended_and_rcaeval.sh
+scripts/run_engineer_written_questions.sh
+scripts/run_revision_experiments.sh
+scripts/run_second_round_review_experiments.sh
 ```
 
 The runner is resumable: rerunning a command skips completed runs and repeats runs that ended in an error.
-`python scripts/check_experiment_progress.py --config <matrix>` shows progress.
+Analyses on the stored records, without rerunning any model:
 
-## Run records
-
-The complete run records (one JSON line per run, including model output, tool trace, timing and grade) are
-archived separately: Zenodo DOI to be added.
+```
+python -m experiment_evaluation.statistical_analysis_and_tables
+python -m experiment_evaluation.operation_taxonomy_analysis
+python -m experiment_evaluation.revision_experiments_summary
+python -m experiment_evaluation.second_round_review_summary
+python -m experiment_evaluation.failure_taxonomy_and_figures --config configs/experiment_matrix_journal_extended.yaml
+python -m experiment_evaluation.figure_accuracy_by_operation_class
+LOG_PARSER_REVISION=1 python -m experiment_evaluation.parser_reconciliation_and_exact_computation_ceiling
+python scripts/build_run_records_manifest.py
+```
 
 ## Data sources
 
@@ -60,5 +74,5 @@ archived separately: Zenodo DOI to be added.
 
 ## Citation
 
-Vasu Atmakuri. Exact Tools, Not Better Retrieval: A Controlled Study of Local Language Model Agents for Question
-Answering over Heterogeneous System Logs. Manuscript, 2026.
+V. Atmakuri, "Retrieval or Exact Computation? Local Language Models for Question Answering over System Logs,"
+in Proc. 5th International Conference on Applied Artificial Intelligence and Computing (ICAAIC 2027), 2027.

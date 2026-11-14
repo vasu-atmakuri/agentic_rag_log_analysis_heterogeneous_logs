@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default="configs/experiment_matrix.yaml")
+    parser.add_argument("--config", default="configs/experiment_matrix_journal_extended.yaml")
     parser.add_argument("--split", default="test", choices=["test", "dev"])
     args = parser.parse_args()
     cfg = yaml.safe_load(open(args.config))

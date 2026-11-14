@@ -1,0 +1,23 @@
+# Revision experiments on the practitioner-written questions: retrieval depth and single-shot query generation.
+datasets_config: configs/benchmark_datasets_journal_extended.yaml
+benchmark_dir: benchmark_questions_frozen_engineer_written
+artifacts_dir: experiment_artifacts
+results_dir: experiment_results_revision_experiments_practitioner
+expert_prompts_dir: configs/expert_system_prompts
+
+runtime:
+  num_ctx: 8192
+  temperature: 0.0
+  seed: 42
+  keep_alive: 2m
+  max_output_tokens: 768
+  max_output_tokens_thinking: 2048
+
+engineer_sources: &engineer_sources [loghub2_hadoop, loghub2_zookeeper, loghub2_linux, loghub2_apache, loghub2_openssh]
+
+experiments:
+  - {name: revision_baselines_practitioner__qwen3_4b_instruct, model: "qwen3:4b-instruct-2507-q4_K_M", datasets: *engineer_sources, methods: [bm25_line_retrieval_top20, bm25_line_retrieval_top50, single_query_generation], characterization: generic}
+  - {name: revision_baselines_practitioner__qwen3_30b_a3b_instruct, model: "qwen3:30b-a3b-instruct-2507-q4_K_M", datasets: *engineer_sources, methods: [bm25_line_retrieval_top20, bm25_line_retrieval_top50, single_query_generation], characterization: generic}
+  - {name: revision_baselines_practitioner__llama3_1_8b, model: "llama3.1:8b", datasets: *engineer_sources, methods: [bm25_line_retrieval_top20, bm25_line_retrieval_top50, single_query_generation], characterization: generic}
+  - {name: revision_baselines_practitioner__llama3_2_3b, model: "llama3.2:3b", datasets: *engineer_sources, methods: [bm25_line_retrieval_top20, bm25_line_retrieval_top50, single_query_generation], characterization: generic}
+  - {name: revision_baselines_practitioner__mistral_small_3_2_24b, model: "mistral-small3.2:24b", datasets: *engineer_sources, methods: [bm25_line_retrieval_top20, bm25_line_retrieval_top50, single_query_generation], characterization: generic}

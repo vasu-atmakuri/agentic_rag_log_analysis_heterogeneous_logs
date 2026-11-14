@@ -10,7 +10,7 @@ Outputs (in <results_dir>/analysis/):
   latex_tables.tex                            booktabs tables ready for the paper
   analysis_summary.md                         human-readable summary
 
-Usage: python -m experiment_evaluation.statistical_analysis_and_tables --config configs/experiment_matrix.yaml
+Usage: python -m experiment_evaluation.statistical_analysis_and_tables --config configs/experiment_matrix_journal_extended.yaml
 """
 from __future__ import annotations
 
@@ -35,9 +35,13 @@ METHOD_LABELS = {
     "fixed_size_chunk_rag": "Fixed-size chunk RAG",
     "multi_type_chunk_rag": "Multi-type chunk RAG",
     "tool_using_agent": "Tool-using agent",
+    "bm25_line_retrieval_top20": "BM25 lines (top-20)",
+    "bm25_line_retrieval_top50": "BM25 lines (top-50)",
+    "single_query_generation": "Single-shot query generation",
 }
-METHOD_ORDER = ["bm25_line_retrieval", "long_context_uniform", "fixed_size_chunk_rag", "multi_type_chunk_rag",
-                "tool_using_agent", "robust_tool_using_agent", "code_writing_agent"]
+METHOD_ORDER = ["bm25_line_retrieval", "bm25_line_retrieval_top20", "bm25_line_retrieval_top50", "long_context_uniform",
+                "fixed_size_chunk_rag", "multi_type_chunk_rag", "single_query_generation", "tool_using_agent",
+                "robust_tool_using_agent", "code_writing_agent"]
 
 
 def load_runs(results_dir: str) -> pd.DataFrame:

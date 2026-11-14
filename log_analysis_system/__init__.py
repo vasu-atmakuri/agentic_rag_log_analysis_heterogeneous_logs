@@ -14,7 +14,11 @@ ANSWER_METHODS = {
     "tool_using_agent": answer_tool_using_agent,
     "robust_tool_using_agent": partial(answer_tool_using_agent, robust_tools=True),
     "code_writing_agent": answer_code_writing_agent,
+    # revision experiments: retrieval depth and single-shot query generation (one query, then answer)
+    "bm25_line_retrieval_top20": partial(answer_bm25_line_retrieval, top_lines=20),
+    "bm25_line_retrieval_top50": partial(answer_bm25_line_retrieval, top_lines=50),
+    "single_query_generation": partial(answer_code_writing_agent, max_code_runs=1),
 }
 METHODS_SUPPORTING_CHUNK_ABLATION = {"multi_type_chunk_rag", "tool_using_agent", "robust_tool_using_agent"}
 METHODS_SUPPORTING_TOOL_ABLATION = {"tool_using_agent", "robust_tool_using_agent"}
-METHODS_WITHOUT_EVIDENCE_TRACKING = {"code_writing_agent"}
+METHODS_WITHOUT_EVIDENCE_TRACKING = {"code_writing_agent", "single_query_generation"}

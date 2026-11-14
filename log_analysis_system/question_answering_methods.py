@@ -121,13 +121,22 @@ def _single_turn(method, backend, system, question, build_context, thinking, sta
     raise last_error
 
 
-def answer_bm25_line_retrieval(workspace, backend, question: str, thinking: bool = False) -> dict:
+def answer_bm25_line_retrieval(workspace, backend, question: str, thinking: bool = False,
+                               top_lines: int = BM25_TOP_LINES) -> dict:
     started = time.perf_counter()
     scores = workspace.bm25.get_scores(tokenize_for_bm25(question))
-    top = sorted(sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:BM25_TOP_LINES])
-    events = [workspace.bm25_line_events[i] for i in top]
+    ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_lines]
 
-    def build(_budget):
+    def build(budget):
+        # keep the highest-ranked lines that fit the prompt budget, then show them in log order
+        kept, used = [], 0
+        for i in ranked:
+            cost = estimate_tokens(workspace.bm25_line_events[i]["raw"][:400]) + 1
+            if used + cost > budget:
+                break
+            kept.append(i)
+            used += cost
+        events = [workspace.bm25_line_events[i] for i in sorted(kept)]
         return ("LOG LINES RETRIEVED BY KEYWORD SEARCH", "\n".join(e["raw"][:400] for e in events),
                 [e["line_no"] for e in events], None)
 
